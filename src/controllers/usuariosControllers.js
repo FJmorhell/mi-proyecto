@@ -15,9 +15,11 @@ export const createUsuarios = async (req, res) => {
     if (rows.length > 0) {
       return res.status(400).json({ error: 'El nombre de usuario ya está en uso' });
     }
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   const [result] = await pool.query(
     'INSERT INTO usuarios (id_usuario, user, password, rol) VALUES (?, ?, ?, ?)',
-    [id_usuario, user, password, rol]
+    [id_usuario, user, hashedPassword, rol]
   );
   res.json({ id_usuario, user, password, rol });
 };
