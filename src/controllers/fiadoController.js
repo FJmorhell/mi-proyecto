@@ -55,5 +55,27 @@ export const deleteFiado = async (req, res) => {
         console.log({error: error.message});
     }
   };
-   
+
+async function obtenerFiadosDeCliente(id_cliente) {
+  try {
+    const sql = `
+      SELECT id, id_cliente, saldo_pendiente, pagado
+      FROM fiado
+      WHERE id_cliente = ?
+    `;
+
+    // Ejecutar la consulta
+    const [rows] = await pool.query(sql, [id_cliente]);
+
+    // rows = array de filas (reemplaza la lista de objetos Java)
+    return rows;
+
+  } catch (error) {
+    console.error("Error al obtener fiados:", error);
+    return [];
+  }
+}
+
+
+
 

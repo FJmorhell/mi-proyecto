@@ -7,6 +7,7 @@ import usuariosRoutes from './routes/Usuarios.js';
 import fiadoRoutes from './routes/fiado.js';
 import authRoutes from "./routes/auths.js";
 import cookieParser from "cookie-parser";
+import { calcularDeudaTotal } from './fiadoService.js';
 
 
 const app = express();
@@ -19,6 +20,17 @@ app.use('/ventas', ventasRoutes);
 app.use('/usuarios', usuariosRoutes);
 app.use('/fiado', fiadoRoutes);
 app.use("/auths", authRoutes);
+app.get('/clientes/:id_cliente/deuda', async (req, res) => {
+  const id_cliente = req.params.id_cliente;
+
+  const deuda = await calcularDeudaTotal(id_cliente);
+
+  res.json({
+    id_cliente: id_cliente,
+    deudaTotal: deuda
+  });
+});
+
 
 app.get('/', (req, res) => {
   res.json({ message: 'API funcionando correctamente' });

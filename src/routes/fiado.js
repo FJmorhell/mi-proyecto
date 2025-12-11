@@ -9,4 +9,5 @@ router.post('/', authRequired, createFiado);
 router.put('/:id', authRequired, updateFiado);
 router.delete('/:id', authRequired, deleteFiado);
 
+
 export default router;
